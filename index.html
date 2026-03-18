@@ -3054,6 +3054,14 @@ function setFilter(cat){
   document.getElementById('fb-silver').className='fbtn'+(cat==='SILVER'?' fbtn-silver':'');
   renderTable();
 }
+function setTagFilter(tag){
+  S.filter.tag=tag;
+  document.querySelectorAll('.tag-filter-btn').forEach(b=>{
+    const isActive=b.dataset.tag===tag;
+    b.classList.toggle('fbtn-all',isActive);
+  });
+  renderTable();
+}
 function onSearch(){S.filter.q=document.getElementById('srch').value.toLowerCase().trim();renderTable();}
 const onSearchDebounced=debounce(onSearch,180);
 function doSort(col){
@@ -4277,7 +4285,7 @@ function initParticles(){
   },{passive:true});
 }
 
-!function init(){
+function init(){
   try{S.assets  =JSON.parse(localStorage.getItem(KA))||[];}catch(e){S.assets=[];}
   try{S.history =JSON.parse(localStorage.getItem(KH))||[];}catch(e){S.history=[];}
   try{S.goals   =JSON.parse(localStorage.getItem(KGOALS))||[];}catch(e){S.goals=[];}
@@ -4331,7 +4339,8 @@ function initParticles(){
   updateStorageSize();
   renderAlertsList();
   renderAlertBadge();
-}();
+}
+window.addEventListener('load', init);
 </script>
 </body>
 </html>
